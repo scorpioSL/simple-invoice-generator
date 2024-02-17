@@ -1,0 +1,146 @@
+<nb-card>
+  <nb-card-header>Invoice</nb-card-header>
+  <nb-card-body *ngIf="invoice">
+
+    <div class="row mt-4 mb-4">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <input type="text" [(ngModel)]="invoice.outletName" nbInput fullWidth
+          class="m-auto text-center font-weight-bold">
+      </div>
+      <div class="col-4"></div>
+    </div>
+
+    <div class="d-flex mt-4 mb-4">
+      <div class="w-100" style="border: 1px dashed black;"></div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <input type="text" [(ngModel)]="invoice.billHeading" nbInput fullWidth
+          class="m-auto text-center font-weight-bold">
+      </div>
+      <div class="col-4"></div>
+    </div>
+
+    <div class="d-flex font-weight-bold align-items-center mt-4- mb-3">
+      <div style="width: 5rem;">
+        <span>BILL NO : </span>
+      </div>
+      <div class="ml-2"><input type="text" nbInput [(ngModel)]="invoice.billNo"></div>
+    </div>
+
+    <div class="d-flex font-weight-bold align-items-center mt-4- mb-3">
+      <div style="width: 5rem;">
+        <span>Ordered : </span>
+      </div>
+      <div class="ml-2">
+        <input nbInput [(ngModel)]="invoice.orderTimestamp" placeholder="Pick Date" [nbDatepicker]="dateTimePicker">
+        <nb-date-timepicker withSeconds #dateTimePicker></nb-date-timepicker>
+      </div>
+    </div>
+
+    <div class="d-flex font-weight-bold align-items-center mt-4- mb-3">
+      <div style="width: 5rem;">
+        <span>Cashier : </span>
+      </div>
+      <div class="ml-2"><input type="text" nbInput [(ngModel)]="invoice.cashier"></div>
+    </div>
+
+    <div class="d-flex mt-4 mb-4">
+      <div class="w-100" style="border: 1px dashed black;"></div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <input type="text" [(ngModel)]="invoice.itemStartTitle" nbInput fullWidth
+          class="m-auto text-center font-weight-bold">
+      </div>
+      <div class="col-4"></div>
+    </div>
+
+    <div class="d-flex mt-4 mb-4">
+      <div class="w-100" style="border: 1px dashed black;"></div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of invoice.items;let i = index;trackBy:trackBy">
+          <td>{{item.id}}</td>
+          <td><input type="text" nbInput [(ngModel)]="item.name" fullWidth placeholder="Name"></td>
+          <td><input type="number" nbInput [(ngModel)]="item.price" fullWidth placeholder="Price"></td>
+          <td><input type="number" nbInput [(ngModel)]="item.quantity" fullWidth placeholder="Quantity"></td>
+          <td><input type="number" nbInput [(ngModel)]="item.total" fullWidth placeholder="Total" disabled></td>
+          <td>
+            <div class="d-flex">
+              <button nbButton status="danger" size="small">
+                <nb-icon icon="trash-outline"></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="invoice.items.length > 0">
+          <td colspan="5" class="text-right align-text-bottom">Sub :</td>
+          <td class="align-text-bottom">{{invoice.total}}</td>
+        </tr>
+        <tr *ngIf="invoice.items.length > 0" class="font-weight-bold">
+          <td colspan="5" class="text-right align-text-bottom">Bill Amt :</td>
+          <td class="h6 align-text-bottom">{{invoice.total}}</td>
+        </tr>
+        <tr *ngIf="invoice.items.length > 0" class="font-weight-bold">
+          <td colspan="5" class="text-right align-text-bottom">
+            <input type="text" class="text-right" nbInput [(ngModel)]="invoice.payType">
+            :
+          </td>
+          <td class="h6 align-text-bottom">{{invoice.total}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex">
+      <button class="ml-auto" nbButton status="primary" (click)="addItem()">
+        <nb-icon icon="plus-outline"></nb-icon>
+      </button>
+    </div>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <input type="text" [(ngModel)]="invoice.footerNote" nbInput fullWidth
+          class="m-auto text-center font-weight-bold">
+      </div>
+      <div class="col-4"></div>
+    </div>
+
+    <div class="d-flex mt-4 mb-4">
+      <div class="w-100" style="border: 1px dashed black;"></div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <input type="text" [(ngModel)]="invoice.developedBy" nbInput fullWidth
+          class="m-auto text-center font-weight-bold">
+      </div>
+      <div class="col-4"></div>
+    </div>
+
+    <div class="d-flex">
+      <button class="ml-auto" nbButton status="danger" (click)="generatePdf()">
+        <nb-icon icon="printer-outline"></nb-icon>
+      </button>
+    </div>
+
+
+  </nb-card-body>
+</nb-card>
